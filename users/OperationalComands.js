@@ -96,7 +96,7 @@ exports.updateuser = function (req, next, callback) {
     'gender': req.body.gender,
     'notification': req.body.notification
   }
-  query.update(param, next, function (err, users) {
+  query.update(req, param, next, function (err, users) {
     callback(err, users)
   })
 }

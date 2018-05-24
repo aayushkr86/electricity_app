@@ -30,7 +30,10 @@ exports.logout = function (req, next, callback) {
   })
 }
 
-exports.updateuser = function (req, next, callback) {
+exports.updateuser = function (req, next, callback) { //console.log(req.user.email)
+  if(req.user.email != req.body.email){ //check if same user is logged in
+    return callback(true, null)
+  }
   OperationalComands.updateuser(req, next, function (err, users) {
     callback(err, users)
   })

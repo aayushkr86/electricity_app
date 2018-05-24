@@ -79,11 +79,13 @@ exports.view = function (param, next, callback) {
 //   })
 // }
 
-exports.update = function (param, next, callback) { //console.log(param)
-  Users.findOne({'account':  param.account}).exec(function (err,account) { //console.log(account)
-    if(account == null && !err){
+exports.update = function (req,param, next, callback) { //console.log(param)
+   //console.log(req.user)
+  Users.findOne({'account':  param.account}).exec(function (err,account) {  //console.log(account.account)
+    if(account == null || account.account == req.user.account){ 
+
       Users.findOne({'mobileno': param.mobileno}).exec(function (err,mobileno) {
-        if(mobileno == null && !err){
+        if(mobileno == null || mobileno.mobileno == req.user.mobileno){
 
           var query = {$or: [{ 'google.email': param.email },{ 'facebook.email': param.email },{ 'local.email':param.email }]}
           Users.findOneAndUpdate(query,{$set:param}

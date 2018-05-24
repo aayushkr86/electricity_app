@@ -63,7 +63,7 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(function(req, res, next){
-  res.locals.login = req.isAuthenticated();
+  res.locals.login = req.isAuthenticated(); //variable available in all views ('login' is the name of the variable)
   res.locals.session = req.session;
   next();
 })
@@ -93,7 +93,10 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500)
-  res.render('error')
+  res.render('error',{
+    message: err.message,
+    error: {}
+  })
 })
 
 module.exports = app
